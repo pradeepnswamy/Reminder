@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Reminder.Behaviours"
+             x:Class="Reminder.Views.MainPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#65c9b5">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:MultiTriggerConverter x:Key="dataHasBeenEntered" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <AbsoluteLayout>
+
+        <Image x:Name="BgImage" Source="Uri_to_image"
+               Aspect="AspectFill"
+               AbsoluteLayout.LayoutBounds="0.0, 0.0, 1.0, 1.0"
+               AbsoluteLayout.LayoutFlags="All"/>
+
+        <StackLayout
+            AbsoluteLayout.LayoutBounds="0.0, 0.0, 1.0, 1.0"
+            AbsoluteLayout.LayoutFlags="All">
+
+            <Frame OutlineColor="Accent" HasShadow="True" 
+                   WidthRequest="300" 
+                   HorizontalOptions="Center"
+                   VerticalOptions="CenterAndExpand">
+                <StackLayout VerticalOptions="EndAndExpand" HorizontalOptions="Center" Orientation="Vertical">
+                    <Label x:Name="Title" Text="Login" HorizontalOptions="Center" TextColor="Black" 
+                   FontFamily="FiraSans-Regular" FontSize="24"/>
+
+                    <BoxView HorizontalOptions="FillAndExpand" HeightRequest="0.5" Color="#dcdedd"/>
+                    <Label x:Name="LoginText" Text="Please login with your registered email-id or mobile number" HorizontalOptions="Center" 
+                   VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="12" TextColor="#616161"/>
+                    <Entry x:Name="Username" Text="" Placeholder="Username" />
+                    <Entry x:Name="Password" Text="" Placeholder="Password" />
+                    <StackLayout Orientation="Horizontal">
+                        <Label x:Name="Rememberme" Text="Remember me" FontSize="14" HorizontalOptions="StartAndExpand"/>
+                        <Label x:Name="ForgetPassword" Text="Forget Password?" TextColor="Blue" FontSize="14" HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                    <Button x:Name="loginButton" Text="Login" TextColor="White" HorizontalOptions="FillAndExpand" BackgroundColor="#f54844" 
+                    HeightRequest="40" IsEnabled="False" Command="{Binding NavigateToDashboardPage}">
+                        <Button.Triggers>
+                            <MultiTrigger TargetType="Button">
+                                <MultiTrigger.Conditions>
+                                    <BindingCondition Binding="{Binding Source={x:Reference Username}, 
+                                    Path=Text.Length,
+                                    Converter={StaticResource dataHasBeenEntered}}" Value="true"/>
+                                    <BindingCondition Binding="{Binding Source={x:Reference Password},
+                                        Path=Text.Length,
+                                        Converter={StaticResource dataHasBeenEntered}}" Value="true"/>
+                                </MultiTrigger.Conditions>
+                            </MultiTrigger>
+                        </Button.Triggers>
+                    </Button>
+                    <Label x:Name="OrText" Text="-OR-" TextColor="#7e7e7e" HorizontalOptions="Center" FontSize="8"/>
+                    <Label x:Name="LoginSocialText" Text="Login with Social" HorizontalOptions="Center" FontSize="14"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Button x:Name="GoogleButton" Text="GOOGLE" HorizontalOptions="StartAndExpand" BackgroundColor="#DE4B39" TextColor="White" 
+                        HeightRequest="35" WidthRequest="150"/>
+                        <Button x:Name="FacebookButton" Text="FACEBOOK" HorizontalOptions="EndAndExpand" BackgroundColor="#3B5999" TextColor="White"
+                        HeightRequest="35" WidthRequest="150"/>
+                    </StackLayout>
+                    <Label x:Name="CreateNewAccountText" Text="Or create a new account, Sign Up" HorizontalOptions="Center" FontSize="12"/>
+                    <Button x:Name="RegisterButton" Text="Register" TextColor="White" HorizontalOptions="FillAndExpand" BackgroundColor="#2C77B3" 
+                    HeightRequest="40" Command="{Binding NavigateToRegistraionPage}" />
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+
+    </AbsoluteLayout>
+
+</ContentPage>

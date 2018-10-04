@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Reminder.Views.RegistrationPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#65c9b5">
+    
+    <AbsoluteLayout>
+        <StackLayout AbsoluteLayout.LayoutBounds="0.0, 0.0, 1.0, 1.0"
+            AbsoluteLayout.LayoutFlags="All">
+            <Frame OutlineColor="Accent" HasShadow="True" 
+                   WidthRequest="300"
+                   HorizontalOptions="Center"
+                   VerticalOptions="CenterAndExpand">
+                <StackLayout VerticalOptions="EndAndExpand" HorizontalOptions="Center" Orientation="Vertical">
+                    <Entry x:Name="Username" Text="" Placeholder="Username/Mail" />
+                    <Entry x:Name="Password" Text="" Placeholder="Password" />
+                    <Entry x:Name="ConfirmPassword" Text="" Placeholder="Confirm Password" />
+                    <Entry x:Name="Mobile" Text="" Placeholder="Mobile" />
+                    <Button x:Name="SyncWithEmail" Text="Sync With Email"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Button x:Name="Signup" Text="SignUp" HorizontalOptions="StartAndExpand" BackgroundColor="#3d5daa" TextColor="White" 
+                        HeightRequest="35" WidthRequest="150" Command="{Binding SignUpCommand}"/>
+                        <Button x:Name="Cancel" Text="Cancel" HorizontalOptions="EndAndExpand" BackgroundColor="#3d5daa" TextColor="White"
+                        HeightRequest="35" WidthRequest="150"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </AbsoluteLayout>
+    
+</ContentPage>
