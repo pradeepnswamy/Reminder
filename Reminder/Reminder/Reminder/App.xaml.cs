@@ -1,10 +1,10 @@
 ﻿using Prism;
 using Prism.Ioc;
-using Reminder.ViewModels;
 using Reminder.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Prism.Autofac;
+using Reminder.PlatformDependent;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Reminder
@@ -17,8 +17,10 @@ namespace Reminder
          * App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
          */
         public App() : this(null) { }
-
-        public App(IPlatformInitializer initializer) : base(initializer) { }
+        
+        public App(IPlatformInitializer initializer) : base(initializer) {
+            
+        }
 
         protected override async void OnInitialized()
         {
@@ -36,6 +38,12 @@ namespace Reminder
             containerRegistry.RegisterForNavigation<AddNewPage>();
             containerRegistry.RegisterForNavigation<EditExistingPage>();
             containerRegistry.RegisterForNavigation<ViewCalendarPage>();
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+            DependencyService.Get<IEventKitHandler>().CreateService();
         }
     }
 }

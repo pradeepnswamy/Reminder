@@ -3,3 +3,8 @@
 ################################################################################
 
 /Reminder/Reminder/Reminder.Android/obj
+/Reminder/Reminder/Reminder/obj
+/Reminder/.vs/Reminder
+/Reminder/Reminder/Reminder.iOS/obj
+/Reminder/Reminder/Reminder/bin/Debug/netstandard2.0
+/Reminder/Reminder/Reminder.iOS/bin/iPhone/Debug

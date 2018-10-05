@@ -1,6 +1,9 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services;
+using Prism.Autofac;
+using Prism.Ioc;
+using Reminder.PlatformDependent;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -47,6 +50,7 @@ namespace Reminder.ViewModels
         }
 
         IPageDialogService _dialogService;
+        IDependencyService _dependencyService;
         public DelegateCommand EventTypeCommand { get; set; }
         public DelegateCommand AddContactCommand { get; set; }
         public DelegateCommand RelationshipCommand { get; set; }
@@ -54,9 +58,10 @@ namespace Reminder.ViewModels
         public DelegateCommand RemindCommand { get; set; }
 
         public DelegateCommand SaveReminder { get; set; }
-        public AddNewPageViewModel(IPageDialogService dialogService)
+        public AddNewPageViewModel(IPageDialogService dialogService, IDependencyService dependencyService)
         {
             _dialogService = dialogService;
+            _dependencyService = dependencyService;
             EventTypeLabel = "Select the Event Type*";
             ContactNameLabel = "Add Contact*";
             RelationshipLabel = "Select RelationShip";
@@ -100,8 +105,9 @@ namespace Reminder.ViewModels
             Debug.WriteLine("Action: " + action);
             RemindLabel = action.ToString();
         }
-        private void saveReminder()
+        public void saveReminder()
         {
+            _dependencyService.Get<IEventKitHandler>().SaveEvent();
             if (validateForm())
                 _dialogService.DisplayAlertAsync("Reminder Saved", null, "OK");
             else
