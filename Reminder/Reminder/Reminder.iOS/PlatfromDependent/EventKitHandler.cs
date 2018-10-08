@@ -6,6 +6,7 @@ using EventKit;
 using Foundation;
 using Reminder.iOS.PlatfromDependent;
 using Reminder.PlatformDependent;
+using Reminder.Model;
 using UIKit;
 using Xamarin.Forms;
 
@@ -24,12 +25,13 @@ namespace Reminder.iOS.PlatfromDependent
 
         public void CreateService()
         {
-            if(EventStore == null)
+
+            /*if(EventStore == null)
             {
                 eventStore = new EKEventStore();
                 try
                 {
-                    eventStore.RequestAccess(EKEntityType.Reminder, (bool granted, NSError e) => {
+                    eventStore.RequestAccess(EKEntityType.Event, (bool granted, NSError e) => {
                         if (granted)
                         {
                             accessGranted = true;
@@ -45,10 +47,32 @@ namespace Reminder.iOS.PlatfromDependent
                 {
                     var e = ex.Message;
                 }
-            }
+            }*/
         }
 
-        public void SaveEvent()
+        public void SaveEvent(EventModel eventModel)
+        {
+            var notification = new UILocalNotification();
+
+
+            // set the fire date (the date time in which it will fire)
+            notification.FireDate = NSDate.FromTimeIntervalSinceNow(120);
+
+            // configure the alert
+            notification.AlertAction = eventModel.EventType;
+            notification.AlertBody = eventModel.Relationship;
+
+            // modify the badge
+            notification.ApplicationIconBadgeNumber = 1;
+
+            // set the sound to be the default sound
+            notification.SoundName = UILocalNotification.DefaultSoundName;
+
+            // schedule it
+            UIApplication.SharedApplication.ScheduleLocalNotification(notification);
+        }
+
+        /*public void SaveEvent()
         {
             EKEvent newEvent = EKEvent.FromStore(eventStore);
             // set the alarm for 5 minutes from now
@@ -77,13 +101,13 @@ namespace Reminder.iOS.PlatfromDependent
             // to retrieve the event you can call
             EKEvent mySavedEvent = eventStore.EventFromIdentifier(newEvent.EventIdentifier);
             Console.WriteLine("Retrieved Saved Event: " + mySavedEvent.Title);
-            /*
+            /-*
             // to delete, note that once you remove the event, the reference will be null, so
             // if you try to access it you'll get a null reference error.
             eventStore.RemoveEvent(mySavedEvent, EKSpan.ThisEvent, true, out e);
-            Console.WriteLine("Event Deleted.");*/
+            Console.WriteLine("Event Deleted.");*-/
 
-        }
+        }*/
 
         public void CreateReminder()
         {

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
@@ -8,8 +8,11 @@
         <Button Text="{Binding EventTypeLabel}" BackgroundColor="Beige" Command="{Binding EventTypeCommand}"/>
         <Button Text="{Binding ContactNameLabel}" BackgroundColor="Beige" Command="{Binding AddContactCommand}"/>
         <Button Text="{Binding RelationshipLabel}" BackgroundColor="Beige" Command="{Binding RelationshipCommand}"/>
-        <Button Text="{Binding EventDateLabel}" BackgroundColor="Beige" Command="{Binding EventDateCommand}"/>
         <Button Text="{Binding RemindLabel}" BackgroundColor="Beige" Command="{Binding RemindCommand}"/>
+        <Button Text="{Binding EventDateLabel}" BackgroundColor="Beige" Command="{Binding EventDateCommand}"/>
+        <DatePicker x:Name="startDatePicker"
+                    Format="D"
+                    Date="{Binding SelectedDate}" />
         <Button Text="Add The Event" BackgroundColor="Beige" Command="{Binding SaveReminder}"/>
     </StackLayout>
 </ContentPage>

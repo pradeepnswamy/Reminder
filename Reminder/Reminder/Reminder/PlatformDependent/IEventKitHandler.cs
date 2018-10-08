@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Reminder.Model;
 
 namespace Reminder.PlatformDependent
 {
@@ -8,7 +9,7 @@ namespace Reminder.PlatformDependent
     {
         void CreateService();
         void CreateReminder();
-        void SaveEvent();
+        void SaveEvent(EventModel eventModel);
 
     }
 }

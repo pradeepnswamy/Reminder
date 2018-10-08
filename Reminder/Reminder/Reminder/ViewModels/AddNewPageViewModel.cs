@@ -1,14 +1,11 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services;
-using Prism.Autofac;
-using Prism.Ioc;
 using Reminder.PlatformDependent;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
+using Reminder.Model;
+using System;
 
 namespace Reminder.ViewModels
 {
@@ -48,6 +45,12 @@ namespace Reminder.ViewModels
             get { return _remindLabel; }
             set { SetProperty(ref _remindLabel, value); }
         }
+        private DateTime _selectedDate;
+        public DateTime SelectedDate
+        {
+            get { return _selectedDate; }
+            set { SetProperty(ref _selectedDate, value); }
+        }
 
         IPageDialogService _dialogService;
         IDependencyService _dependencyService;
@@ -67,6 +70,7 @@ namespace Reminder.ViewModels
             RelationshipLabel = "Select RelationShip";
             EventDateLabel = "Select Event Date*";
             RemindLabel = "Remind Before*";
+            SelectedDate = DateTime.Today;
             EventTypeCommand = new DelegateCommand(async ()=> await selectEventTypeAsync());
             AddContactCommand = new DelegateCommand(async() => await selectAddContactAsync());
             RelationshipCommand = new DelegateCommand(async () => await selectRelationshipAsync());
@@ -107,13 +111,28 @@ namespace Reminder.ViewModels
         }
         public void saveReminder()
         {
-            _dependencyService.Get<IEventKitHandler>().SaveEvent();
+            EventModel em = PrepareEventModel();
+            _dependencyService.Get<IEventKitHandler>().SaveEvent(em);
             if (validateForm())
+            {
                 _dialogService.DisplayAlertAsync("Reminder Saved", null, "OK");
+
+
+            }
             else
                 _dialogService.DisplayAlertAsync("Please fill all Mandatory Fields", null, "OK");
         }
 
+        private EventModel PrepareEventModel()
+        {
+            EventModel em = new EventModel();
+            em.Contact = ContactNameLabel;
+            em.EventDate = SelectedDate;
+            em.EventType = EventTypeLabel;
+            em.Relationship = RelationshipLabel;
+            em.RemindBefore = 1;//RemindLabel
+            return em;
+        }
         private bool validateForm()
         {
             if (EventTypeLabel != "Select the Event Type*" && ContactNameLabel != "Add Contact*" && 
